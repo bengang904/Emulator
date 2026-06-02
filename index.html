@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>EmulatorJS</title>
+        <title>Emulator JS</title>
         <script src="coi-serviceworker.js"></script>
         <link rel="icon" href="docs/favicon.ico" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
         <meta name="viewport" content="width = device-width, initial-scale = 1">
@@ -288,11 +288,12 @@
 
             async function run(upload, file) {
                 const url = upload ? input.files[0] : (file.startsWith("https://") || file.startsWith("http://") ? file : `roms/${file}`);
+                const forcedCore = urlParams.get("core");
                 const parts = upload ? input.files[0].name.split(".") : file.split(".");
 
                 const biosUrl = biosFileInput.files.length > 0 ? biosFileInput.files[0] : "";
 
-                const core = await (async (ext) => {
+                const core = forcedCore ? forcedCore : await (async (ext) => {
                     if (["fds", "nes", "unif", "unf"].includes(ext))
                         return "nes"
 
